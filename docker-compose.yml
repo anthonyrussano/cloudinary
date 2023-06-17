@@ -1,0 +1,7 @@
+---
+version: "3.5"
+services:
+  cloudinary:
+    ports:
+      - '5555:5000'
+    image: anthonyrussano/cloudinary:latest

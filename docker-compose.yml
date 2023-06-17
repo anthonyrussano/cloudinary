@@ -5,3 +5,7 @@ services:
     ports:
       - '5555:5000'
     image: anthonyrussano/cloudinary:latest
+    environment:
+      - CLOUDINARY_API_KEY={{ .CLOUDINARY_API_KEY }}
+      - CLOUDINARY_API_SECRET={{ .CLOUDINARY_API_SECRET }}
+      - CLOUDINARY_CLOUD_NAME={{ .CLOUDINARY_CLOUD_NAME }}

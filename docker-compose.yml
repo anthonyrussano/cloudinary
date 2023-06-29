@@ -1,19 +1,25 @@
----
 version: "3.5"
 services:
   cloudinary:
     ports:
       - '5555:5000'
     image: anthonyrussano/cloudinary:latest
+    environment:
+      - CLOUDINARY_API_KEY_FILE=/run/secrets/cloudinary_api_key
+      - CLOUDINARY_API_SECRET_FILE=/run/secrets/cloudinary_api_secret
+      - CLOUDINARY_CLOUD_NAME_FILE=/run/secrets/cloudinary_cloud_name
     secrets:
-      - CLOUDINARY_API_KEY
-      - CLOUDINARY_API_SECRET
-      - CLOUDINARY_CLOUD_NAME
+      - cloudinary_api_key
+      - cloudinary_api_secret
+      - cloudinary_cloud_name
 
 secrets:
-  CLOUDINARY_API_KEY:
+  cloudinary_api_key:
+    name: cloudinary_api_key
     external: true
-  CLOUDINARY_API_SECRET:
+  cloudinary_api_secret:
+    name: cloudinary_api_secret
     external: true
-  CLOUDINARY_CLOUD_NAME:
+  cloudinary_cloud_name:
+    name: cloudinary_cloud_name
     external: true

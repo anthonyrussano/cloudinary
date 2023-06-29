@@ -5,6 +5,6 @@ services:
       - '5555:5000'
     image: anthonyrussano/cloudinary:latest
     environment:
-      - CLOUDINARY_API_KEY_FILE=/run/secrets/CLOUDINARY_API_KEY
-      - CLOUDINARY_API_SECRET_FILE=/run/secrets/CLOUDINARY_API_SECRET
-      - CLOUDINARY_CLOUD_NAME_FILE=/run/secrets/CLOUDINARY_CLOUD_NAME
+      - CLOUDINARY_API_KEY=/run/secrets/CLOUDINARY_API_KEY
+      - CLOUDINARY_API_SECRET=/run/secrets/CLOUDINARY_API_SECRET
+      - CLOUDINARY_CLOUD_NAME=/run/secrets/CLOUDINARY_CLOUD_NAME

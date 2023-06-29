@@ -21,7 +21,7 @@ def create_uploads_folder():
 
 
 @app.route("/", methods=["GET", "POST"])
-def upload_image():
+def upload_file():
     if request.method == "POST":
         file = request.files["file"]
         if file:
@@ -32,17 +32,23 @@ def upload_image():
             file.save(file_path)
 
             # Upload the file to Cloudinary
-            response = upload(file_path)
+            response = upload(file_path, resource_type="video")
 
             if "url" in response:
                 # Delete the local file after upload (optional)
                 os.remove(file_path)
 
+                file_extension = os.path.splitext(file.filename)[1][1:].lower()
+                mime_type = file.mimetype
+
                 return f"""
                     <h1>Upload successful!</h1>
-                    <img src="{response['url']}" alt="Uploaded Image">
+                    <video controls>
+                        <source src="{response['url']}" type="{mime_type}">
+                        Your browser does not support the video tag.
+                    </video>
                     <p>URL: <a href="{response['url']}">{response['url']}</a></p>
-                    <p><a href="/">Upload another image</a></p>
+                    <p><a href="/">Upload another file</a></p>
                 """
             else:
                 return "Upload failed."

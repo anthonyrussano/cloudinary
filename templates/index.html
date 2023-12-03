@@ -7,17 +7,21 @@
 
 <body>
     <h1>Upload a File</h1>
-    <p>Select an image or video file to upload.</p>
-
-    <!-- Display messages from the server -->
-    {% if message %}
-    <p>{{ message }}</p>
-    {% endif %}
-
     <form method="POST" enctype="multipart/form-data" action="/">
         <input type="file" name="file" accept="image/*, video/*" required>
         <input type="submit" value="Upload">
     </form>
+
+    <h2>Upload History</h2>
+    <ul>
+        {% for record in history %}
+        <li>
+            <a href="{{ record.url }}">{{ record.filename }}</a>
+        </li>
+        {% else %}
+        <li>No uploads yet.</li>
+        {% endfor %}
+    </ul>
 </body>
 
 </html>

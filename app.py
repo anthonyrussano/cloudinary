@@ -34,6 +34,9 @@ def determine_resource_type(file_extension):
         return None  # Unknown type or unsupported
 
 
+upload_history = []
+
+
 @app.route("/", methods=["GET", "POST"])
 def upload_file():
     if request.method == "POST":
@@ -58,6 +61,14 @@ def upload_file():
                 )
 
                 if "url" in response:
+                    # Add upload details to history
+                    upload_history.append(
+                        {
+                            "filename": file.filename,
+                            "url": response["url"],
+                        }
+                    )
+
                     # Delete the local file after upload (optional)
                     os.remove(file_path)
 
@@ -70,7 +81,7 @@ def upload_file():
             else:
                 return "Unsupported file type."
 
-    return render_template("index.html")
+    return render_template("index.html", history=upload_history)
 
 
 def render_upload_response(resource_type, url, mime_type):

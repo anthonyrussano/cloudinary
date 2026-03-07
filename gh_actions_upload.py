@@ -1,27 +1,18 @@
 import os
 import sys
-from cloudinary.uploader import upload
 
-# Configure Cloudinary
-cloudinary.config(
-    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
-    api_key=os.environ.get("CLOUDINARY_API_KEY"),
-    api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
-)
+from image_upload.uploader import upload_file
+
 
 def upload_to_cloudinary(file_path):
-    """
-    Uploads a file to Cloudinary and prints the URL of the uploaded file.
-    :param file_path: Path to the file to be uploaded.
-    """
     try:
-        response = upload(file_path)
-        if "url" in response:
-            print(f"Upload successful! URL: {response['url']}")
-        else:
-            print("Upload failed.")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+        response = upload_file(
+            file_path,
+            folder=os.environ.get("CLOUDINARY_FOLDER"),
+        )
+        print(f"Upload successful! URL: {response['secure_url'] or response['url']}")
+    except Exception as exc:
+        print(f"An error occurred: {exc}")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
